@@ -4,7 +4,7 @@
 	<title>Home</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="{{ asset('assets/frontend/images/icons/favicon.png')}}"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/bootstrap/css/bootstrap.min.css')}}">
@@ -16,13 +16,13 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/fonts/linearicons-v1.0.0/icon-font.min.css')}}">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/animate/animate.css')}}">
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/css-hamburgers/hamburgers.min.css')}}">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/animsition/css/animsition.min.css')}}">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/select2/select2.min.css')}}">
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/daterangepicker/daterangepicker.css')}}">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/slick/slick.css')}}">
@@ -34,60 +34,43 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/util.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/main.css')}}">
 <!--===============================================================================================-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 @livewireStyles
 </head>
 <body class="animsition">
-	
+
 	<!-- Header -->
 	<header>
 		<!-- Header desktop -->
 		<div class="container-menu-desktop">
-		
+
 
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop container">
-					
-					<!-- Logo desktop -->		
+
+					<!-- Logo desktop -->
 					<a href="/" class="logo">
 						<img src="{{ asset('assets/frontend/images/icons/logo-01.png')}}" alt="IMG-LOGO">
 					</a>
 
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
-						<ul class="main-menu">
-							<li class="active-menu">
-								<a href="/">Home</a>
-								{{-- <ul class="sub-menu">
-									<li><a href="index.html">Homepage 1</a></li>
-									<li><a href="home-02.html">Homepage 2</a></li>
-									<li><a href="home-03.html">Homepage 3</a></li>
-								</ul> --}}
+						<ul class="main-menu " >
+							<li class="active-menu" >
+								<a href="/" style="text-decoration: none;">Home</a>
 							</li>
 
 							<li>
-								<a href="/shop">Shop</a>
-							</li>
-
-							<li class="label1" data-label1="hot">
-								<a href="shoping-cart.html">Features</a>
-							</li>
-
-							<li>
-								<a href="blog.html">Blog</a>
-							</li>
-
-							<li>
-								<a href="about.html">About</a>
-							</li>
-
-							<li>
-								<a href="contact.html">Contact</a>
+								<a href="/shop" style="text-decoration: none;">Shop</a>
 							</li>
 						</ul>
-					</div>	
+					</div>
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
+
+
 						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
 							<i class="zmdi zmdi-search"></i>
 						</div>
@@ -99,14 +82,78 @@
 						<a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
 							<i class="zmdi zmdi-favorite-outline"></i>
 						</a>
+                        @if(Route::has('login'))
+                            @auth
+                                @if(Auth::user()->utype === 'ADM')
+                                    <nav class="navbar navbar-expand-lg navbar-light">
+                                        <div class="container-fluid">
+                                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                            <span class="navbar-toggler-icon"></span>
+                                        </button>
+                                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                   {{Auth::user()->name}}
+                                                    </a>
+                                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                        <li><a class="dropdown-item" href="{{route('admin.dashboard')}}">Dashboard</a></li>
+                                                        <li><hr class="dropdown-divider"></li>
+                                                        <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                                                        <form method="POST" id="logout-form" action="{{ route('logout') }}">
+                                                            @csrf
+                                                        </form>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        </div>
+                                    </nav>
+                                @else
+                                    <nav class="navbar navbar-expand-lg navbar-light">
+                                        <div class="container-fluid">
+                                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                                <span class="navbar-toggler-icon"></span>
+                                            </button>
+                                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                                    <li class="nav-item dropdown">
+                                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        {{Auth::user()->name}}
+                                                        </a>
+                                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                        <li><a class="dropdown-item" href="{{route('user.dashboard')}}">Dashboard</a></li>
+                                                        <li><hr class="dropdown-divider"></li>
+                                                        <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                                                        <form method="POST" id="logout-form" action="{{ route('logout') }}">
+                                                            @csrf
+                                                        </form>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                @endif
+
+                            @else
+                                <a href="{{ route('login') }}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 " style="font-size: 16px; " >
+                                    Login
+                                </a>
+                                <a href="{{ route('register') }}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 " style="font-size: 16px; " >
+                                    Register
+                                </a>
+                            @endif
+                        @endif
 					</div>
+
 				</nav>
-			</div>	
+			</div>
 		</div>
 
 		<!-- Header Mobile -->
 		<div class="wrap-header-mobile">
-			<!-- Logo moblie -->		
+			<!-- Logo moblie -->
 			<div class="logo-mobile">
 				<a href="index.html"><img src="{{ asset('assets/frontend/images/icons/logo-01.png')}}" alt="IMG-LOGO"></a>
 			</div>
@@ -137,33 +184,7 @@
 
 		<!-- Menu Mobile -->
 		<div class="menu-mobile">
-			{{-- <ul class="topbar-mobile">
-				<li>
-					<div class="left-top-bar">
-						Free shipping for standard order over $100
-					</div>
-				</li>
 
-				<li>
-					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							Help & FAQs
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							My Account
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							EN
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							USD
-						</a>
-					</div>
-				</li>
-			</ul> --}}
 
 			<ul class="main-menu-m">
 				<li>
@@ -231,7 +252,7 @@
 					<i class="zmdi zmdi-close"></i>
 				</div>
 			</div>
-			
+
 			<div class="header-cart-content flex-w js-pscroll">
 				<ul class="header-cart-wrapitem w-full">
 					<li class="header-cart-item flex-w flex-t m-b-12">
@@ -282,7 +303,7 @@
 						</div>
 					</li>
 				</ul>
-				
+
 				<div class="w-full">
 					<div class="header-cart-total w-full p-tb-40">
 						Total: $75.00
@@ -302,10 +323,10 @@
 		</div>
 	</div>
 
-	
+
 
 	{{$slot}}
-	
+
 
 	<!-- Footer -->
 	<footer class="bg3 p-t-75 p-b-32">
@@ -357,7 +378,7 @@
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Returns 
+								Returns
 							</a>
 						</li>
 
@@ -511,7 +532,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="col-md-6 col-lg-5 p-b-30">
 						<div class="p-r-50 p-t-5 p-lr-0-lg">
 							<h4 class="mtext-105 cl2 js-name-detail p-b-14">
@@ -525,7 +546,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 							<p class="stext-102 cl3 p-t-23">
 								Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
 							</p>
-							
+
 							<!--  -->
 							<div class="p-t-33">
 								<div class="flex-w flex-r-m p-b-10">
@@ -584,7 +605,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 											Add to cart
 										</button>
 									</div>
-								</div>	
+								</div>
 							</div>
 
 							<!--  -->
@@ -614,7 +635,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		</div>
 	</div>
 
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<script src="{{ asset('assets/frontend/vendor/jquery/jquery-3.2.1.min.js')}}"></script>
 <!--===============================================================================================-->
 	<script src="{{ asset('assets/frontend/vendor/animsition/js/animsition.min.js')}}"></script>
@@ -656,6 +677,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		    });
 		});
 	</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <!--===============================================================================================-->
 	<script src="{{ asset('assets/frontend/vendor/isotope/isotope.pkgd.min.js')}}"></script>
 <!--===============================================================================================-->
@@ -694,7 +717,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 				swal(nameProduct, "is added to cart !", "success");
 			});
 		});
-	
+
 	</script>
 <!--===============================================================================================-->
 	<script src="{{ asset('assets/frontend/vendor/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
