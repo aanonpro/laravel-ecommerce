@@ -34,7 +34,59 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/util.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/main.css')}}">
 <!--===============================================================================================-->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<style>
+	.dropbtn {
+	  /* background-color: black; */
+	  color: black;
+	  padding: 10px;
+	  font-size: 18px;
+	  border: none;
+	  cursor: pointer;
+	  font-weight: bold;
+	  /* border-radius: 10%; */
+	}
+	
+	.dropdown {
+	  position: relative;
+	  display: inline-block;
+	}
+	
+	.dropdown-content {
+	  display: none;
+	  position: absolute;
+	  background-color: #717fe0;
+	  min-width: 90px;
+	  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	  z-index: 1;
+	 
+	}
+	
+	.dropdown-content a {
+	  color: white;
+	  padding: 12px 16px;
+	  text-decoration: none;
+	  display: block;
+	 
+	}
+	
+	.dropdown-content a:hover {
+		background-color: #717fe0;
+	
+	}
+	
+	.dropdown:hover .dropdown-content {
+	  display: block;
+	  
+	}
+	
+	.dropdown:hover .dropbtn {
+	color: #717fe0;
+	
+	}
+
+	
+	</style>
+{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
 
 @livewireStyles
 </head>
@@ -58,13 +110,15 @@
 					<div class="menu-desktop">
 						<ul class="main-menu " >
 							<li class="active-menu" >
-								<a href="/" style="text-decoration: none;">Home</a>
+								<a href="/" >Home</a>
 							</li>
 
 							<li>
-								<a href="/shop" style="text-decoration: none;">Shop</a>
+								<a href="/shop" >Shop</a>
 							</li>
+						
 						</ul>
+						
 					</div>
 
 					<!-- Icon header -->
@@ -82,69 +136,49 @@
 						<a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
 							<i class="zmdi zmdi-favorite-outline"></i>
 						</a>
-                        @if(Route::has('login'))
-                            @auth
-                                @if(Auth::user()->utype === 'ADM')
-                                    <nav class="navbar navbar-expand-lg navbar-light">
-                                        <div class="container-fluid">
-                                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                            <span class="navbar-toggler-icon"></span>
-                                        </button>
-                                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                                <li class="nav-item dropdown">
-                                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                   {{Auth::user()->name}}
-                                                    </a>
-                                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                        <li><a class="dropdown-item" href="{{route('admin.dashboard')}}">Dashboard</a></li>
-                                                        <li><hr class="dropdown-divider"></li>
-                                                        <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
-                                                        <form method="POST" id="logout-form" action="{{ route('logout') }}">
-                                                            @csrf
-                                                        </form>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        </div>
-                                    </nav>
-                                @else
-                                    <nav class="navbar navbar-expand-lg navbar-light">
-                                        <div class="container-fluid">
-                                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                                <span class="navbar-toggler-icon"></span>
-                                            </button>
-                                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                                    <li class="nav-item dropdown">
-                                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        {{Auth::user()->name}}
-                                                        </a>
-                                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                        <li><a class="dropdown-item" href="{{route('user.dashboard')}}">Dashboard</a></li>
-                                                        <li><hr class="dropdown-divider"></li>
-                                                        <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
-                                                        <form method="POST" id="logout-form" action="{{ route('logout') }}">
-                                                            @csrf
-                                                        </form>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </nav>
-                                @endif
+						@if(Route::has('login'))
+						@auth
+							@if(Auth::user()->utype === 'ADM')
+								<div class="dropdown">
+									<button class="dropbtn" >{{Auth::user()->name}}</button>
+									<div class="dropdown-content">
+										<a href="{{route('admin.dashboard')}}">Dashboard</a>
+										<hr>
+										<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+										<form method="POST" id="logout-form" action="{{ route('logout') }}">
+											@csrf
+										</form>
+									</div>
+								</div>
+								 
+							@else
+								<div class="dropdown">
+									<button class="dropbtn">{{Auth::user()->name}}</button>
+									<div class="dropdown-content">
+										<a href="{{route('user.dashboard')}}">Dashboard</a>
+										<hr>
+										<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+										<form method="POST" id="logout-form" action="{{ route('logout') }}">
+											@csrf
+										</form>
+									</div>
+								</div>
+							@endif
 
-                            @else
-                                <a href="{{ route('login') }}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 " style="font-size: 16px; " >
-                                    Login
-                                </a>
-                                <a href="{{ route('register') }}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 " style="font-size: 16px; " >
-                                    Register
-                                </a>
-                            @endif
-                        @endif
+						@else
+							<a href="{{ route('login') }}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11" style="font-size: 16px;
+							padding: 12px;
+							border-radius: 4px;
+							color: #fff;
+							margin-left: 10px;
+							background-color: #717fe0;" >
+								Login
+							</a>
+							<a href="{{ route('register') }}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 " style="font-size: 16px; " >
+								Register
+							</a>
+						@endif
+					@endif
 					</div>
 
 				</nav>
@@ -171,6 +205,50 @@
 				<a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
 					<i class="zmdi zmdi-favorite-outline"></i>
 				</a>
+				@if(Route::has('login'))
+				@auth
+					@if(Auth::user()->utype === 'ADM')
+						<div class="dropdown">
+							<button class="dropbtn">{{Auth::user()->name}}</button>
+							<div class="dropdown-content">
+								<a href="{{route('admin.dashboard')}}">Dashboard</a>
+								<hr>
+								<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+								<form method="POST" id="logout-form" action="{{ route('logout') }}">
+									@csrf
+								</form>
+							</div>
+						</div>
+						 
+					@else
+						<div class="dropdown">
+							<button class="dropbtn">{{Auth::user()->name}}</button>
+							<div class="dropdown-content">
+								<a href="{{route('user.dashboard')}}">Dashboard</a>
+								<hr>
+								<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+								<form method="POST" id="logout-form" action="{{ route('logout') }}">
+									@csrf
+								</form>
+							</div>
+						</div>
+						
+					@endif
+
+				@else
+					<a href="{{ route('login') }}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11" style="font-size: 16px;
+					padding: 12px;
+					border-radius: 4px;
+					color: #fff;
+					margin-left: 10px;
+					background-color: #717fe0;" >
+						Login
+					</a>
+					<a href="{{ route('register') }}" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 " style="font-size: 16px; " >
+						Register
+					</a>
+				@endif
+			@endif
 			</div>
 
 			<!-- Button show menu -->
@@ -188,36 +266,17 @@
 
 			<ul class="main-menu-m">
 				<li>
-					<a href="index.html">Home</a>
-					<ul class="sub-menu-m">
-						<li><a href="index.html">Homepage 1</a></li>
-						<li><a href="home-02.html">Homepage 2</a></li>
-						<li><a href="home-03.html">Homepage 3</a></li>
-					</ul>
+					<a href="/">Home</a>
+					
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
 					</span>
 				</li>
 
 				<li>
-					<a href="product.html">Shop</a>
+					<a href="/shop">Shop</a>
 				</li>
 
-				<li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
-				</li>
-
-				<li>
-					<a href="blog.html">Blog</a>
-				</li>
-
-				<li>
-					<a href="about.html">About</a>
-				</li>
-
-				<li>
-					<a href="contact.html">Contact</a>
-				</li>
 			</ul>
 		</div>
 
@@ -678,7 +737,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		});
 	</script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> --}}
 <!--===============================================================================================-->
 	<script src="{{ asset('assets/frontend/vendor/isotope/isotope.pkgd.min.js')}}"></script>
 <!--===============================================================================================-->
